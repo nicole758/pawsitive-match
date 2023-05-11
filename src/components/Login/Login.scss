@@ -1,0 +1,58 @@
+.main{
+    background-color: lightblue;
+    height: 100vh;
+
+    &__title{
+        text-align: center;
+        margin:5rem 0;
+    }
+
+    &__login{
+        display: flex;
+        flex-direction: column;
+
+        &__label{
+            margin-bottom: 0.3rem;
+            margin-left: 0.8rem;
+        }
+
+        &__input{
+            width:90%;
+            margin-bottom: 0.5rem;
+            align-self: center;
+        }
+
+        &__button{
+            width: 90%;
+            align-self: center;
+            border-radius: 18px;
+            border-style: none;
+            background-color: ghostwhite;
+            margin-top: 2rem;
+            height: 1.5rem;
+        }
+
+
+    }
+
+    &__button{
+        &-wrapper{
+        display:flex;
+        width:100%;
+        justify-content: center;
+        margin-bottom:2rem;
+        }
+     &-create{
+        width: 90%;
+        border-radius: 18px;
+        border-style: none;
+        background-color: ghostwhite;
+        margin-top: 2rem;
+        height: 1.5rem;
+    }
+}
+
+
+
+
+}

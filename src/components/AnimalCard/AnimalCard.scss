@@ -1,0 +1,50 @@
+.card {
+    display: flex;
+    justify-content: center;
+    margin-top: 5vh;
+
+    &-swipe {
+        position: absolute;
+    }
+
+    &-picture {
+        position: relative;
+        height: 83vh;
+        margin: 0 2rem;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        width: 17rem;
+        border-radius: 20px;
+    }
+
+    &-desc {
+        height: 25vh;
+        background-color: lightblue;
+        bottom: 0;
+        width: 17rem;
+        border-radius: 0 0 20px 20px;
+        position: absolute;
+        overflow-y: auto;
+
+        &__button {
+            background-color: lightblue;
+            border: none;
+            &-undo {
+                height: 24px;
+                display: inline-block;
+            }
+        }
+
+        &-dogName {
+            font-size: 36px;
+            margin: 0.5rem 0.3rem;
+            display: inline-block;
+        }
+
+        &-info {
+            margin: 0.5rem 0.3rem;
+            font-size: 15px;
+        }
+    }
+}

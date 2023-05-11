@@ -1,70 +1,99 @@
-# Getting Started with Create React App
+import React from 'react'
+import TinderCard from 'react-tinder-card'
+import { useState, useEffect } from 'react'
+import "./AnimalCard.scss"
+import axios from 'axios'
+import undo from "../../assets/undo.png";
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+function AnimalCard() {
+    const [data, setData] = useState([]);
+    const [swipedCards, setSwipedCards] = useState([]);
+    const [lastSwipedCard, setLastSwipedCard] = useState([]);
 
-## Available Scripts
+    useEffect(() => {
+        const url = "https://api.petfinder.com/v2/oauth2/token";
+        const clientId = "7mqJ45O7ipnWKmeS6pgLL2kis53LyQNeQyP3jPRlebVsbfU2pL";
+        const clientSecret = "zMnfVlcqocwKAIcI98kEPizSgZ7oq9tpDLeEUFRB";
+        const data = {
+            grant_type: "client_credentials",
+            client_id: clientId,
+            client_secret: clientSecret,
+        };
+        axios
+            .post(url, data)
+            .then((response) => {
+                console.log(response.data.access_token);
+                fetchDog(response.data.access_token);
+            });
+    }, []);
 
-In the project directory, you can run:
+    function fetchDog(accessToken) {
+        const url = "https://api.petfinder.com/v2/animals";
 
-### `npm start`
+        axios
+            .get(url, {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+                params: {
+                    type: "Dog",
+                    limit: 100,
+                },
+            })
+            .then((response) => {
+                setData(response.data.animals);
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+    }
+//     function handleSwipe(direction, dog) {
+//         if (direction === "right") {
+//             setSwipedCards((prevSwipedCards) => [...prevSwipedCards, dog]);
+//         }
+//     }
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+// function handleUndo() {
+//     if (swipedCards.length > 0) {
+//         const lastDog = swipedCards[swipedCards.length - 1];
+//         setLastSwipedCard(lastDog);
+//         setSwipedCards((prevSwipedCards) => prevSwipedCards.slice(0, -1));
+//     }
+// }
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
 
-### `npm test`
+    return (
+        <div className="card">
+            {([data])
+                .filter((dog) => dog.photos[0] != null)
+                .map((filteredDog) => (
+                    <TinderCard
+                        className="card-swipe"
+                        key={filteredDog.id}
+                        preventSwipe={["up", "down"]}
+                        // onSwipe={(direction) => handleSwipe(direction, filteredDog)}
+                    >
+                        <div
+                            className="card-picture"
+                            style={{ backgroundImage: `url(${filteredDog.photos[0].large})` }}
+                        >
+                            <div className="card-desc">
+                                <button className="undo-button">
+                                {/* onClick={handleUndo} */}
+                                    <img className="card-desc-undo" src={undo}></img>
+                                </button>
+                                <h2 className="card-desc-dogName">{filteredDog.name}</h2>
+                                <p className="card-desc-info">Sex: {filteredDog.gender}</p>
+                                <p className="card-desc-info">Age: {filteredDog.age}</p>
+                                <p className="card-desc-info">Description: {filteredDog.description}</p>
+                                <p className="card-desc-info">Tags: {filteredDog.tags}</p>
+                            </div>
+                        </div>
+                    </TinderCard>
+                ))}
+        </div>
+    );
+}
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+export default AnimalCard;
