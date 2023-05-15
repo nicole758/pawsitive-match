@@ -1,0 +1,57 @@
+  // useEffect(() => {
+    //     const url = "https://api.petfinder.com/v2/oauth2/token";
+    //     const clientId = "7mqJ45O7ipnWKmeS6pgLL2kis53LyQNeQyP3jPRlebVsbfU2pL";
+    //     const clientSecret = "zMnfVlcqocwKAIcI98kEPizSgZ7oq9tpDLeEUFRB";
+    //     const data = {
+    //         grant_type: "client_credentials",
+    //         client_id: clientId,
+    //         client_secret: clientSecret,
+    //     };
+    //     axios
+    //         .post(url, data)
+    //         .then((response) => {
+    //             console.log(response.data.access_token);
+    //             fetchDog(response.data.access_token);
+    //         });
+    // }, []);
+
+    // function fetchDog(page) {
+    //     const url = "https://api.petfinder.com/v2/animals";
+
+    //     // Check if there is a valid token and if it hasn't expired
+    //     const tokenExpirationTime = localStorage.getItem("tokenExpirationTime");
+    //     const accessToken = localStorage.getItem("accessToken");
+    //     if (accessToken && tokenExpirationTime && Date.now() < tokenExpirationTime) {
+    //         // If there is a valid token, use it to make the request
+    //         axios
+    //             .get(url, {
+    //                 headers: {
+    //                     Authorization: `Bearer ${accessToken}`,
+    //                 },
+    //                 params: {
+    //                     type: "Dog",
+    //                     limit: 100,
+    //                     page: page,
+    //                 },
+    //             })
+    //             .then((response) => {
+    //                 setData((prevData) => [...prevData, ...response.data.animals]);
+    //             })
+    //             .catch((err) => {
+    //                 console.error(err);
+    //             });
+    //     } else {
+    //         // If there is no valid token or it has expired, generate a new token
+    //         const clientId = "7mqJ45O7ipnWKmeS6pgLL2kis53LyQNeQyP3jPRlebVsbfU2pL";
+    //         const clientSecret = "zMnfVlcqocwKAIcI98kEPizSgZ7oq9tpDLeEUFRB";
+    //         const data = {
+    //             grant_type: "client_credentials",
+    //             client_id: clientId,
+    //             client_secret: clientSecret,
+    //         };
+    //         axios
+    //             .post("https://api.petfinder.com/v2/oauth2/token", data)
+    //             .then((response) => {
+    //                 const accessToken = response.data.access_token;
+    //                 const expiresIn = response.data.expires_in;
+    //                 const tokenExpirationTime = Date.now() + expiresIn * 1000;

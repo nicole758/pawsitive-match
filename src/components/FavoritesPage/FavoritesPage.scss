@@ -1,0 +1,38 @@
+.favorites {
+    display: flex;
+    flex-direction: column;
+
+    &-title{
+        align-self: center;
+    }
+
+    &__container {
+        border:9px solid lightskyblue;
+        background-color: mintcream;
+        display: flex;
+        align-items: center;
+
+        &-left{
+            margin-left: 1.5rem;
+        }
+
+        &-right{
+            margin-left: 2rem;
+        }
+
+
+        &-name {
+            margin-bottom: 0;
+        }
+
+        &-gender {
+            margin: 0.3rem 0;
+
+        }
+
+        &-photo {
+            height: 9rem;
+            width: 8rem;
+        }
+    }
+}

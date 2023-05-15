@@ -1,51 +1,75 @@
 import { useState } from "react";
 import axios from "axios";
 import "./Login.scss";
+import logo from "../../assets/paw-logo.png";
+import { Link } from "react-router-dom";
 
-function Login(){
-    const [user, setUser] = useState("");
-    const [pass, setPass] = useState("");
+function Login() {
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
 
 
     function handleUpload(event) {
         event.preventDefault();
 
         const data = {
-            user: user,
-            pass: pass
+            username: username,
+            password: password
         };
-    
-    axios.post('http://localhost:5050', data)
-    .then(response => {
-        console.log(response.data);
-        setUser("");
-        setPass("");
-    })
-    .catch(error => {
-        console.log(error);
-    });
 
-}
+        axios
+            .post("http://localhost:5050/users/login", data)
+            .then(response => {
+                setUsername("");
+                setPassword("");
+                if (response.data) { // Check if response data is not empty
+                    window.location.href = "/dashboard";
+                  } else {
+                    setError("Invalid username or password");
+                  }
+            })
+            .catch(error => {
+                console.log(error);
+                setError("An error occurred during login");
+            });
+    }
 
-
-    return(
-
+    return (
         <div className="main" onSubmit={handleUpload}>
-            <h1 className="main__title">Pawsitive Match</h1>
             <form className="main__login ">
-            <label className="main__login__label"htmlFor="username">Username</label>
-            <input className="main__login__input" id="username" value={user} onChange={(e) => setUser(e.target.value)} placeholder="Username"></input>
-            <label className="main__login__label"htmlFor="password">Password</label>
-            <input className="main__login__input" id="password" value={pass} placeholder="Password" onChange={(e) => setPass(e.target.value)}></input>
-            <button className="main__login__button" type="submit" >Login</button>
+                <img className="main-logo" src={logo} alt="Logo" />
+                <label className="main__login__label" htmlFor="username">
+                    Username
+                </label>
+                <input
+                    className="main__login__input"
+                    id="username"
+                    value={username}
+                    onChange={e => setUsername(e.target.value)}
+                    placeholder="Username"
+                />
+                <label className="main__login__label" htmlFor="password">
+                    Password
+                </label>
+                <input
+                    className="main__login__input"
+                    id="password"
+                    value={password}
+                    placeholder="Password"
+                    onChange={e => setPassword(e.target.value)}
+                />
+                <button className="main__login__button" type="submit">
+                    Login
+                </button>
             </form>
+            {error && <p className="main__error">{error}</p>}
             <div className="main__button-wrapper">
-            <button className="main__button-create">Create Account</button>
+                <Link className="main__login__link" to="/createAccount">
+                    <button className="main__button-create">Create Account</button>
+                </Link>
             </div>
         </div>
-
     );
-
 }
 
 export default Login;

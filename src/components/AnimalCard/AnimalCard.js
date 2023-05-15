@@ -3,11 +3,12 @@ import TinderCard from 'react-tinder-card'
 import { useState, useEffect } from 'react'
 import "./AnimalCard.scss"
 import axios from 'axios'
-import undo from "../../assets/undo.png";
+const { v4: uuidv4 } = require('uuid');
 
 function AnimalCard() {
-    const [data, setData] = useState([]);
 
+    const [data, setData] = useState([]);
+    // const [swipedDogs, setSwipedDogs] = useState([]);
 
     useEffect(() => {
         const url = "https://api.petfinder.com/v2/oauth2/token";
@@ -23,12 +24,32 @@ function AnimalCard() {
             .then((response) => {
                 console.log(response.data.access_token);
                 fetchDog(response.data.access_token);
+                console.log('hello');
             });
     }, []);
 
+    const handleSwipe = (direction, swipedDog) => {
+        if (direction === "right") {
+            const newSwipedDog = { id: uuidv4(), name: swipedDog.name, gender: swipedDog.gender, age: swipedDog.age, description: swipedDog.description, tags: JSON.stringify(swipedDog.tags), photo:swipedDog.photos[0].large};
+            // setSwipedDogs((prevSwipedDogs) => [...prevSwipedDogs, newSwipedDog]);
+            saveSwipedDogs(newSwipedDog);
+        }
+    };
+
+    const saveSwipedDogs = (swipedDog) => {
+        axios.post("http://localhost:5050/favorite-dogs/create", swipedDog)
+            .then((response) => {
+                console.log(response.data);
+            })
+            .catch((error) => {
+                console.log('hi');
+                console.error(error);
+            });
+    };
+
+
     function fetchDog(accessToken, page) {
         const url = "https://api.petfinder.com/v2/animals";
-
         axios
             .get(url, {
                 headers: {
@@ -36,10 +57,11 @@ function AnimalCard() {
                 },
                 params: {
                     type: "Dog",
-                    limit: 100,
+                    limit: 70,
                 },
             })
             .then((response) => {
+                console.log("Uh oh");
                 setData(response.data.animals);
             })
             .catch((err) => {
@@ -49,31 +71,34 @@ function AnimalCard() {
 
 
     return (
-        <div className="card">
-            {
-                data
-                    .filter((dog) => dog.photos[0] != null)
-                    .map((filteredDog) => (
-                        <TinderCard
-                            className="card-swipe"
-                            key={filteredDog.id}
-                            preventSwipe={["up", "down"]}
-                        >
-                            <div className="card-picture" style={{ backgroundImage: `url(${filteredDog.photos[0].large})` }}>
-                                <div className="card-desc">
-                                    <button className="card-desc__button" >
+        <>
+            <div className="card">
+                {
+                    data
+                        .filter((dog) => dog.photos[0] != null)
+                        .map((filteredDog) => (
+                            <TinderCard
+                                className="card-swipe"
+                                key={filteredDog.id}
+                                preventSwipe={["up", "down"]}
+                                onSwipe={(direction) => handleSwipe(direction, filteredDog)}
+                            >
+                                <div className="card-picture" style={{ backgroundImage: `url(${filteredDog.photos[0].large})` }}>
+                                    <div className="card-desc">
+                                        {/* <button className="card-desc__button" >
                                         <img className="card-desc__button-undo" src={undo}></img>
-                                    </button>
-                                    <h2 className="card-desc-dogName">{filteredDog.name}</h2>
-                                    <p className="card-desc-info">Sex: {filteredDog.gender}</p>
-                                    <p className="card-desc-info">Age: {filteredDog.age}</p>
-                                    <p className="card-desc-info">Description: {filteredDog.description}</p>
-                                    <p className="card-desc-info">Tags: {filteredDog.tags}</p>
+                                    </button> */}
+                                        <h2 className="card-desc-dogName">{filteredDog.name}</h2>
+                                        <p className="card-desc-info">Sex: {filteredDog.gender}</p>
+                                        <p className="card-desc-info">Age: {filteredDog.age}</p>
+                                        <p className="card-desc-info">Description: {filteredDog.description}</p>
+                                        <p className="card-desc-info">Tags: {filteredDog.tags}</p>
+                                    </div>
                                 </div>
-                            </div>
-                        </TinderCard>
-                    ))}
-        </div>
+                            </TinderCard>
+                        ))}
+            </div>
+        </>
     )
 };
 

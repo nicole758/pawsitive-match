@@ -2,6 +2,12 @@
     background-color: lightblue;
     height: 100vh;
 
+    &-logo{
+        height: 16rem;
+        margin: 0 auto;
+        
+    }
+
     &__title{
         text-align: center;
         margin:5rem 0;
@@ -10,6 +16,11 @@
     &__login{
         display: flex;
         flex-direction: column;
+
+        &__link{
+            width: 90%;
+            align-self: center;
+        }
 
         &__label{
             margin-bottom: 0.3rem;
@@ -20,6 +31,9 @@
             width:90%;
             margin-bottom: 0.5rem;
             align-self: center;
+            border-radius: 12px;
+            border:none;
+            height:2rem;
         }
 
         &__button{
@@ -43,7 +57,7 @@
         margin-bottom:2rem;
         }
      &-create{
-        width: 90%;
+        width: 100%;
         border-radius: 18px;
         border-style: none;
         background-color: ghostwhite;

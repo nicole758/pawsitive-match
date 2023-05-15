@@ -1,0 +1,16 @@
+.footer{
+    display: flex;
+    height: 3rem;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    justify-content: space-evenly;
+    background-color: lightskyblue;
+    margin-bottom: 1rem;
+
+
+    &-heart,&-logout,&-profile{
+        background-color: lightskyblue;
+        height: 3rem;
+    }
+}
