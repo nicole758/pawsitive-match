@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 function Login() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-
+    const [error, setError] = useState("");
 
     function handleUpload(event) {
         event.preventDefault();
@@ -22,6 +22,7 @@ function Login() {
             .then(response => {
                 setUsername("");
                 setPassword("");
+                setError("");
                 if (response.data) { // Check if response data is not empty
                     window.location.href = "/dashboard";
                   } else {
