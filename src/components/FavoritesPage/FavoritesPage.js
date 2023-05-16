@@ -4,11 +4,14 @@ import "./FavoritesPage.scss";
 import back from  "../../assets/back.png";
 import { Link, useParams } from 'react-router-dom';
 import trash from "../../assets/trash.png";
-
+import ApplyPopup from "../ApplyPopup/ApplyPopup";
 function FavoritePage() {
   const [dogs, setDogs] = useState([]);
   const { id } = useParams();
   const [name, setName] = useState('');
+  const [showPopup, setShowPopup] = useState(false);
+  const [appliedDogs, setAppliedDogs] = useState([]);
+
 
   useEffect(() => {
     fetchFavoriteDogs();
@@ -50,7 +53,18 @@ function FavoritePage() {
       });
   };
 
+  const handleApplyNow = (dogId) => {
+    setAppliedDogs((prevAppliedDogs) => [...prevAppliedDogs, dogId]);
+    setShowPopup(true);
+  };
 
+  const handleClosePopup = () => {
+    setShowPopup(false);
+  };
+
+  const isApplied = (dogId) => {
+    return appliedDogs.includes(dogId);
+  };
 
   return (
     <div className='favorites'>
@@ -66,7 +80,15 @@ function FavoritePage() {
           <img className='favorites__container-trash' src={trash} alt="Delete" onClick={() => handleDeleteFavoriteDog(dog.id)} />
           <h2 className="favorites__container-name">{dog.name}</h2>
           <h3 className="favorites__container-gender">{dog.gender}</h3>
-          <button className='favorites__container-apply'>Apply Now</button>
+          {isApplied(dog.id) ? (
+              <button className='favorites__container-apply favorites__container-apply-applied' disabled>
+                Applied
+              </button>
+            ) : (
+              <button className='favorites__container-apply' onClick={() => handleApplyNow(dog.id)}>
+                Apply Now
+              </button>
+            )}
           </div>
           <div className='favorites__container-right'>
           <img className="favorites__container-photo" src={dog.photo} alt={dog.name} />
@@ -74,6 +96,7 @@ function FavoritePage() {
           
         </div>
       ))}
+       {showPopup && <ApplyPopup onClose={handleClosePopup} />}
     </div>
   );
 }
