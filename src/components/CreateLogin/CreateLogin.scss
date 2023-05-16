@@ -1,0 +1,55 @@
+.create{
+    background-color: lightblue;
+    height: 100vh;
+
+    &-logo{
+        height: 16rem;
+        margin: 0 auto;
+        
+    }
+
+    &__title{
+        text-align: center;
+        margin:5rem 0;
+    }
+
+    &__login{
+        display: flex;
+        flex-direction: column;
+
+        &__link{
+            margin-top: 2rem;
+            width: 100%;
+            margin-left: 1rem;
+        }
+
+        &__label{
+            margin-bottom: 0.3rem;
+            margin-left: 0.8rem;
+        }
+
+        &__input{
+            width:90%;
+            margin-bottom: 0.5rem;
+            align-self: center;
+            border-radius: 12px;
+            border:none;
+            height:2rem;
+        }
+
+        &__button{
+            width:90%;
+            align-self: center;
+            border-radius: 18px;
+            border-style: none;
+            background-color: ghostwhite;
+            height: 1.5rem;
+        }
+
+
+    }
+
+
+
+
+}

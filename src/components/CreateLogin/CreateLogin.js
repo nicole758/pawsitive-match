@@ -2,6 +2,8 @@ import React from 'react'
 import logo from "../../assets/paw-logo.png";
 import { useState } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
+import "./CreateLogin.scss";
 
 function CreateLogin() {
     const [username, setUsername] = useState("");
@@ -32,23 +34,21 @@ function CreateLogin() {
 
 
     return(
-        
-        <div className="main" onSubmit={handleUpload}>
-            <form className="main__login ">
-            <img className="main-logo"src={logo}></img>
-            <label className="main__login__label"htmlFor="name">Name</label>
-            <input className="main__login__input" id="name" value={name} onChange={(e) => setName(e.target.value)} placeholder="Name"></input>
-            <label className="main__login__label"htmlFor="username">Username</label>
-            <input className="main__login__input" id="username" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Username"></input>
-            <label className="main__login__label"htmlFor="email">Email</label>
-            <input className="main__login__input" id="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email"></input>
-            <label className="main__login__label"htmlFor="password">Password</label>
-            <input className="main__login__input" id="password" value={password} placeholder="Password" onChange={(e) => setPassword(e.target.value)}></input>
-            <button className="main__login__button"type="submit" >Submit</button>
+        <div className="create" onSubmit={handleUpload}>
+            <form className="create__login ">
+            <img className="create-logo"src={logo}></img>
+            <label className="create__login__label"htmlFor="name">Name</label>
+            <input className="create__login__input" id="name" value={name} onChange={(e) => setName(e.target.value)} placeholder="Name"></input>
+            <label className="create__login__label"htmlFor="username">Username</label>
+            <input className="create__login__input" id="username" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Username"></input>
+            <label className="create__login__label"htmlFor="email">Email</label>
+            <input className="create__login__input" id="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email"></input>
+            <label className="create__login__label"htmlFor="password">Password</label>
+            <input className="create__login__input" id="password" value={password} placeholder="Password" onChange={(e) => setPassword(e.target.value)}></input>
+            <Link className="create__login__link" to="/">
+            <button className="create__login__button"type="submit" >Submit</button>
+            </Link>
             </form>
-            <div className="main__button-wrapper">
-            <button className="main__button-create">Create Account</button>
-            </div>
         </div>
 
     );

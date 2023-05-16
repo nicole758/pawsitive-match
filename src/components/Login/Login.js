@@ -2,12 +2,15 @@ import { useState } from "react";
 import axios from "axios";
 import "./Login.scss";
 import logo from "../../assets/paw-logo.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
 
 function Login() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
+    const navigate = useNavigate();
+
 
     function handleUpload(event) {
         event.preventDefault();
@@ -23,11 +26,12 @@ function Login() {
                 setUsername("");
                 setPassword("");
                 setError("");
-                if (response.data) { // Check if response data is not empty
-                    window.location.href = "/dashboard";
-                  } else {
+                if (response.data) {
+                    const userId = response.data.id;
+                    navigate(`/dashboard/${userId}`);
+                } else {
                     setError("Invalid username or password");
-                  }
+                }
             })
             .catch(error => {
                 console.log(error);

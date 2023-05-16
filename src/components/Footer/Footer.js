@@ -6,13 +6,13 @@ import { Link } from 'react-router-dom';
 import "./Footer.scss";
 
 
-function Footer() {
+function Footer({ userId }) {
     return (
         <div className= "footer">
-            <Link className="footer__link"to="/favoriteDogs">
+            <Link className="footer__link" to={`/favorites/${userId}`}>
             <img className="footer-heart" src={heart} alt="favorites page link"/>
             </Link>
-            <Link className="footer__link"to="/profile">
+            <Link className="footer__link"to={`/profile/${userId}`}>
             <img className="footer-profile" src={profile} alt="profile page link" />
             </Link>
             <Link className="footer__link"to="/">

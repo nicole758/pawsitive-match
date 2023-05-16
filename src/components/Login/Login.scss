@@ -18,6 +18,7 @@
         flex-direction: column;
 
         &__link{
+            margin:2rem 0;
             width: 90%;
             align-self: center;
         }
@@ -42,8 +43,8 @@
             border-radius: 18px;
             border-style: none;
             background-color: ghostwhite;
-            margin-top: 2rem;
             height: 1.5rem;
+            margin: 1.5rem 0;
         }
 
 
@@ -55,13 +56,13 @@
         width:100%;
         justify-content: center;
         margin-bottom:2rem;
+        height: 2rem;
         }
      &-create{
         width: 100%;
         border-radius: 18px;
         border-style: none;
         background-color: ghostwhite;
-        margin-top: 2rem;
         height: 1.5rem;
     }
 }
