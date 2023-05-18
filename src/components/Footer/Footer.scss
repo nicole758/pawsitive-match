@@ -5,12 +5,15 @@
     bottom: 0;
     width: 100%;
     justify-content: space-evenly;
-    background-color: lightskyblue;
+    background-color: white;
     margin-bottom: 1rem;
 
 
     &-heart,&-logout,&-profile{
-        background-color: lightskyblue;
-        height: 3rem;
+        background-color: white;
+        height: 2rem;
+        border: lightskyblue 0.3rem solid;
+        border-radius: 2rem;
+        padding: 0.6rem;
     }
 }

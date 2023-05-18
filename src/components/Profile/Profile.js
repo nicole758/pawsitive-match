@@ -1,7 +1,7 @@
 import React from 'react'
 import logo from "../../assets/paw-logo.png";
 import axios from 'axios';
-import { useState, useef } from 'react';
+import { useState } from 'react';
 import "./Profile.scss";
 import { Link } from 'react-router-dom';
 import back from "../../assets/back.png";
@@ -16,22 +16,6 @@ function Profile() {
     const { id } = useParams();
     const [name, setName] = useState('');
 
-
-    // useEffect(() => {
-    //     fetchUserProfile();
-    // }, []);
-
-    // const fetchUserProfile = () => {
-    //     axios
-    //         .get(`http://localhost:5050/users/${id}`)
-    //         .then((response) => {
-    //             const { name} = response.data;
-    //             setFullName(name);
-    //         })
-    //         .catch((error) => {
-    //             console.error(error);
-    //         });
-    // };
 
     const fetchName = () => {
         axios
@@ -83,7 +67,7 @@ function Profile() {
             <form className="edit__form ">
                 <div className='edit__form-flex'>
                     <Link className='edit__form-link' to={`/dashboard/${id}`}>
-                        <img className='edit__form-back' src={back}></img>
+                        <img className='edit__form-back' src={back} alt="back button"></img>
                     </Link>
                     <img className="edit__form-logo" src={logo}></img>
                 </div>

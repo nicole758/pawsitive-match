@@ -36,7 +36,7 @@ function CreateLogin() {
     return(
         <div className="create" onSubmit={handleUpload}>
             <form className="create__login ">
-            <img className="create-logo"src={logo}></img>
+            <img className="create-logo"src={logo} alt="pawsitive match logo"></img>
             <label className="create__login__label"htmlFor="name">Name</label>
             <input className="create__login__input" id="name" value={name} onChange={(e) => setName(e.target.value)} placeholder="Name"></input>
             <label className="create__login__label"htmlFor="username">Username</label>

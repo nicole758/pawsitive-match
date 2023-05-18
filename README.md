@@ -1,167 +1,53 @@
-import React from 'react'
-import TinderCard from 'react-tinder-card'
-import { useState, useEffect } from 'react'
-import "./AnimalCard.scss"
-import axios from 'axios'
-import undo from "../../assets/undo.png";
+# Pawsitive Match
 
-function AnimalCard() {
-    const [data, setData] = useState([]);
-    const [swipedCards, setSwipedCards] = useState([]);
-    const [lastSwipedCard, setLastSwipedCard] = useState([]);
-
-    useEffect(() => {
-        const url = "https://api.petfinder.com/v2/oauth2/token";
-        const clientId = "7mqJ45O7ipnWKmeS6pgLL2kis53LyQNeQyP3jPRlebVsbfU2pL";
-        const clientSecret = "zMnfVlcqocwKAIcI98kEPizSgZ7oq9tpDLeEUFRB";
-        const data = {
-            grant_type: "client_credentials",
-            client_id: clientId,
-            client_secret: clientSecret,
-        };
-        axios
-            .post(url, data)
-            .then((response) => {
-                console.log(response.data.access_token);
-                fetchDog(response.data.access_token);
-            });
-    }, []);
-
-    function fetchDog(accessToken) {
-        const url = "https://api.petfinder.com/v2/animals";
-
-        axios
-            .get(url, {
-                headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                },
-                params: {
-                    type: "Dog",
-                    limit: 100,
-                },
-            })
-            .then((response) => {
-                setData(response.data.animals);
-            })
-            .catch((err) => {
-                console.error(err);
-            });
-    }
-//     function handleSwipe(direction, dog) {
-//         if (direction === "right") {
-//             setSwipedCards((prevSwipedCards) => [...prevSwipedCards, dog]);
-//         }
-//     }
-
-// function handleUndo() {
-//     if (swipedCards.length > 0) {
-//         const lastDog = swipedCards[swipedCards.length - 1];
-//         setLastSwipedCard(lastDog);
-//         setSwipedCards((prevSwipedCards) => prevSwipedCards.slice(0, -1));
-//     }
-// }
+Pawsitive Match is an application designed to simplify and enhance the adoption process, providing a visually appealing experience. It primarily targets a younger demographic, drawing inspiration from the popular dating app, Tinder.
 
 
-    return (
-        <div className="card">
-            {([data])
-                .filter((dog) => dog.photos[0] != null)
-                .map((filteredDog) => (
-                    <TinderCard
-                        className="card-swipe"
-                        key={filteredDog.id}
-                        preventSwipe={["up", "down"]}
-                        // onSwipe={(direction) => handleSwipe(direction, filteredDog)}
-                    >
-                        <div
-                            className="card-picture"
-                            style={{ backgroundImage: `url(${filteredDog.photos[0].large})` }}
-                        >
-                            <div className="card-desc">
-                                <button className="undo-button">
-                                {/* onClick={handleUndo} */}
-                                    <img className="card-desc-undo" src={undo}></img>
-                                </button>
-                                <h2 className="card-desc-dogName">{filteredDog.name}</h2>
-                                <p className="card-desc-info">Sex: {filteredDog.gender}</p>
-                                <p className="card-desc-info">Age: {filteredDog.age}</p>
-                                <p className="card-desc-info">Description: {filteredDog.description}</p>
-                                <p className="card-desc-info">Tags: {filteredDog.tags}</p>
-                            </div>
-                        </div>
-                    </TinderCard>
-                ))}
-        </div>
-    );
-}
+## API Reference
+
+#### Get all dogs
+
+```http
+ GET https://api.petfinder.com/v2/types/dogs
+```
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `api_key` | `string` | **Required**. Your API key |
 
 
-export default AnimalCard;
 
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+## Tech stack used
 
-function App() {
-
-  const [data, setData] = useState([]);
+React, Node, MySQL
 
 
-  useEffect(() =>{
-      const url = 'https://api.petfinder.com/v2/oauth2/token';
-      const clientId = '7mqJ45O7ipnWKmeS6pgLL2kis53LyQNeQyP3jPRlebVsbfU2pL';
-      const clientSecret = 'zMnfVlcqocwKAIcI98kEPizSgZ7oq9tpDLeEUFRB';
-      const data = {
-        grant_type: 'client_credentials',
-        client_id: clientId ,
-        client_secret: clientSecret
-      }
-      axios.post(url, data)
-      .then(response => {
-        console.log(response.data.access_token)
-        fetchDog(response.data.access_token);
-      })
+## Authors
 
-  },[]);
+- [@nicole758](https://www.github.com/nicole758)
 
-  function fetchDog(accessToken) {
-    const url = 'https://api.petfinder.com/v2/animals';
 
-    axios.get(url, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-      params: {
-        type: "Dog"
-      },
-    })
-      .then(response => {
-        setData(response.data.animals);
-      })
-      .catch(err => {
-        console.error(err);
-      });
-  }
 
-  return (
-    <div>
-      <h1>Animals:</h1>
-      <ul>
-        {data
-          .filter(dog => dog.photos[0] != null) 
-          .map(filteredDog => (
-            <li key={filteredDog.id}>
-              <h2>{filteredDog.name}</h2>
-              <p>Sex: {filteredDog.gender}</p>
-              <p>Age: {filteredDog.age}</p>
-              <p>Description: {filteredDog.description}</p>
-              <p>Tags: {filteredDog.tags}</p> 
-                <img src={filteredDog.photos[0].small} alt={`Photo of ${filteredDog.name}`} />
-            </li>
-          ))}
-      </ul>
+## Running the Project
 
-    </div>
-  );
-}
+To run the project, add my sql database username,password, and name on a .env file. Then run npm start on both the frontend and backend
 
-export default App;
+```bash
+  npm start for frontend and backend
+```
+
+
+## Features
+
+1. Create an Account
+2. Login to Account
+3. Swipe right or left on a dog.
+4. If dog is swiped right on, the dog is saved into the user's database.
+5. Favorites Page with all dogs the invidividual wants to adopt.
+6. Button on Favorites Page so the individual could adopt the dog.
+7. Profile Page so user can edit their information.
+8. Sign out button so the user can sign out of their account.
+
+## Lessons learned & next steps
+
+I have acquired the skills to enable user account creation and login functionality. Additionally, users can now save their favorite dogs by swiping right. I have gained proficiency in storing user information in the database on an individual basis. Moving forward, my objectives include implementing a secure user account system by hashing passwords before storing them in the backend. I also plan to incorporate the storage of additional profile information for users in the backend. Additionally, I aim to enhance the visual design to ensure a more enjoyable user experience.

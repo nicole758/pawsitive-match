@@ -8,10 +8,10 @@ import { useParams } from "react-router-dom";
 const { v4: uuidv4 } = require('uuid');
 
 
+
 function Dashboard() {
     const { id } = useParams();
     const [data, setData] = useState([]);
-    // const [swipedDogs, setSwipedDogs] = useState([]);
 
     useEffect(() => {
         const url = "https://api.petfinder.com/v2/oauth2/token";
@@ -35,9 +35,6 @@ function Dashboard() {
         if (direction === "right") {
             const generateId = uuidv4()
             const newSwipedDog = { id: generateId, name: swipedDog.name, gender: swipedDog.gender, age: swipedDog.age, description: swipedDog.description, tags: JSON.stringify(swipedDog.tags), photo: swipedDog.photos[0].large };
-            // const userFavoriteDog = {dog_id:generateId,userId:id}
-            // console.log(id);
-            // setSwipedDogs((prevSwipedDogs) => [...prevSwipedDogs, newSwipedDog]);
             saveSwipedDogs(newSwipedDog);
         }
     };
@@ -95,6 +92,7 @@ function Dashboard() {
 
     return (
         <>
+         <h1 className="card-title">Find Your Match</h1>
             <div className="card">
                 {
                     data

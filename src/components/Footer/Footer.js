@@ -1,5 +1,5 @@
 import React from 'react'
-import heart from "../../assets/heart.png";
+import heart from "../../assets/favoriteicon.png";
 import logout from "../../assets/logout.png";
 import profile from "../../assets/profile.png";
 import { Link } from 'react-router-dom';
